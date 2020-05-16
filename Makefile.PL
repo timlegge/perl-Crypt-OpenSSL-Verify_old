@@ -1,13 +1,5 @@
-#!/usr/bin/env perl
-
-use strict;
-use warnings;
-
-BEGIN { unshift @INC, '.' }
-
-use inc::Module::Install 0.91;
-use Module::Install::AuthorRequires;
-use Module::Install::AuthorTests;
+use 5.008005;
+use ExtUtils::MakeMaker 7.12; # for XSMULTI option
 
 use Config;
 
@@ -20,8 +12,10 @@ sub search_lib {
     my $libbase = 'lib' . substr($lib, 2) . $Config{lib_ext};
     my $libbase_so = 'lib' . substr($lib, 2) . "." . $Config{so};
     my $libbase_cyg = 'lib' . substr($lib, 2) . ".dll" . $Config{lib_ext};
+
     my @paths = split(' ', $Config{libpth});
     push @paths, $ENV{PERL_LIBPATH} if exists $ENV{PERL_LIBPATH};
+
     for my $path (@paths) {
         if (-f $path . '/' . $libbase) {
             print "$path/$libbase\n";
@@ -45,24 +39,20 @@ if (!defined search_lib('-lcrypto')) {
         exit;
 }
 
-name 'Crypt-OpenSSL-Verify';
-license 'perl';
-all_from 'Verify.pm';
-
-requires_external_cc();
-
+my $inc_path;
+my $lib_path;
 if (-d "/usr/include/openssl") {
-	cc_inc_paths('/usr/include/openssl');
-	cc_lib_paths('/usr/lib');
+        $inc_path = '-I/usr/include/openssl';
+        $lib_path = '/usr/lib';
 } elsif (-d "/usr/local/include/ssl") {
-	cc_inc_paths('/usr/local/include/ssl');
-	cc_lib_paths('/usr/local/lib/ssl');
+        $inc_path = '-I/usr/local/include/ssl';
+        $lib_path = '/usr/local/lib/ssl';
 } elsif (-d "/usr/local/ssl/include") {
-	cc_inc_paths('/usr/local/ssl/include');
-	cc_lib_paths('/usr/local/ssl/lib');
+        $inc_path = '-I/usr/local/ssl/include';
+        $lib_path = '/usr/local/ssl/lib';
 }
 
-cc_lib_links('crypto');
+my $lib_links = '-lcrypto';
 
 my $ccflags = '';
 if ($Config::Config{ccname} =~ /gcc/i) {
@@ -71,28 +61,56 @@ if ($Config::Config{ccname} =~ /gcc/i) {
   $ccflags =  '';
 }
 
+my $optimize_flags = '';
 if (($Config::Config{myuname} =~ /sunos|solaris/i) && ($Config::Config{PATCHLEVEL} =~ /5.20/)) {
-    cc_optimize_flags("-O3 -DOPENSSL_API_COMPAT=0x10100000L");
+    $optimize_flags = "-O3 -DOPENSSL_API_COMPAT=0x10100000L";
 } else {
-    cc_optimize_flags("-O3 $ccflags -DOPENSSL_API_COMPAT=0x10100000L");
+    $optimize_flags = "-O3 $ccflags -DOPENSSL_API_COMPAT=0x10100000L";
 }
 
-requires 'Crypt::OpenSSL::X509' => '1.807';
+my @authors = ( 'Timothy Legge <timlegge@cpan.org>', 'Wesley Schwengle <waterkip@cpan.org>' );
 
-author_requires 'Test::NoTabs';
-author_requires 'Test::Pod' => '1.14';
-author_requires 'Test::Pod::Coverage' => '1.04';
-
-test_requires 'Test::More' => '0.88';
-test_requires 'File::Slurp';
-test_requires 'Test::Exception';
-
-resources
-     license     => "http://dev.perl.org/licenses",
-     bugtracker  => "https://github.com/perl-Net-SAML2/perl-Crypt-OpenSSL-Verify/issues",
-     repository  => "https://github.com/perl-Net-SAML2/perl-Crypt-OpenSSL-Verify";
-
-author_tests 't/author';
-
-WriteAll();
-
+WriteMakefile(
+  NAME           => 'Crypt::OpenSSL::Verify',
+  VERSION_FROM   => 'lib/Crypt/OpenSSL/Verify.pm',
+  PREREQ_PM      => {
+      'perl' => '5.010',
+      'ExtUtils::MakeMaker' => '7.12',
+      'Crypt::OpenSSL::X509' => '1.807'
+  },
+  ABSTRACT_FROM  => 'lib/Crypt/OpenSSL/Verify.pm',
+  AUTHOR         => \@authors,
+  CONFIGURE_REQUIRES => {
+      ExtUtils::MakeMaker=>q[6.59],
+  },
+  BUILD_REQUIRES => {
+      ExtUtils::MakeMaker=>q[6.59],
+      File::Slurp=>q[0],
+      Test::More=>q[0.88]
+  },
+  MIN_PERL_VERSION => '5.010',
+  INC            => "$inc_path",
+  LIBS           => "$lib_links",
+  TEST_REQUIRES  => {
+      'Test::More' => '0.88',
+      'File::Slurp' => '0' ,
+      'Test::NoTabs' => '0',
+      'Test::Pod' => '1.14',
+      'Test::Pod::Coverage' => '1.04',
+      'Test::Exception' => '0',
+  },
+  test          => {
+        TESTS => 't/*.t t/author/*.t',
+  },
+  OPTIMIZE       => "$optimize_flags",
+  LICENSE        => 'perl_5',
+  XSMULTI        => 1,
+  META_MERGE        => {
+        "meta-spec" => { version => 1.4 },
+        resources => {
+            bugtracker => 'https://github.com/perl-net-saml2/perl-Crypt-OpenSSL-Verify/issues',
+            repository => 'https://github.com/perl-net-saml2/perl-Crypt-OpenSSL-Verify',
+            license     => "http://dev.perl.org/licenses",
+        },
+  },
+);

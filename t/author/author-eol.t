@@ -13,8 +13,8 @@ use Test::More 0.88;
 use Test::EOL;
 
 my @files = (
-    'Verify.pm',
-    'Verify.xs',
+    'lib/Crypt/OpenSSL/Verify.pm',
+    'lib/Crypt/OpenSSL/Verify.xs',
     't/00-basic.t',
     't/01-load-ca.t',
     't/02-verify-good-cert.t',
