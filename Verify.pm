@@ -165,14 +165,6 @@ Constructor. Returns an OpenSSL Verify instance, set up with the given CA.
     # Using the defaults of your OS:
     my $ca = Crypt::OpenSSL::Verify->new();
 
-=head2 new_from_x509($catext)
-
-Constructor. Returns an OpenSSL Verify instance, set up with the given CA.
-
-Arguments:
-
- * $ca - Crypt::OpenSSL::X509->new_from_string(base64 certificate string)
-
 =head2 verify($cert)
 
 Verify the certificate is signed by the CA. Returns true if so, and
