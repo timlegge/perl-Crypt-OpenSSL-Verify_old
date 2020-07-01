@@ -318,16 +318,12 @@ SV * new(class, ...)
         if (!strict_certs)
             X509_STORE_set_verify_cb_func(x509_store, cb1);
 
-        if (noCAfile) {
-            X509_LOOKUP_init(cafile_lookup);
-        }
-        else {
+        if (!noCAfile) {
             cafile_lookup = X509_STORE_add_lookup(x509_store, X509_LOOKUP_file());
-        }
-
-        if (cafile_lookup == NULL) {
-            X509_STORE_free(x509_store);
-            croak("failure to add lookup to store: %s", ssl_error());
+            if (cafile_lookup == NULL) {
+                X509_STORE_free(x509_store);
+                croak("failure to add lookup to store: %s", ssl_error());
+            }
         }
 
         if (CAfile != NULL) {
@@ -338,16 +334,12 @@ SV * new(class, ...)
             }
         }
 
-        if (noCApath) {
-            X509_LOOKUP_init(cadir_lookup);
-        }
-        else {
+        if (!noCApath) {
             cadir_lookup = X509_STORE_add_lookup(x509_store, X509_LOOKUP_hash_dir());
-        }
-
-        if (cadir_lookup == NULL) {
-            X509_STORE_free(x509_store);
-            croak("failure to add lookup to store: %s", ssl_error());
+            if (cadir_lookup == NULL) {
+                X509_STORE_free(x509_store);
+                croak("failure to add lookup to store: %s", ssl_error());
+            }
         }
 
         if (CApath != NULL) {
@@ -356,7 +348,6 @@ SV * new(class, ...)
                 croak("Error loading directory %s\n", SvPV_nolen(CApath));
             }
         }
-
 
         HV * attributes = newHV();
 
