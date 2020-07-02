@@ -276,6 +276,8 @@ SV * new(class, ...)
             if (ST(1) != NULL)
                 // TODO: ensure_string_sv
                 CAfile = ST(1);
+                if (strlen(SvPV_nolen(CAfile)) == 0)
+                    CAfile = NULL;
 
             if (items > 2)
                 options = ensure_hv(ST(2), "options");
