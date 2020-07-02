@@ -5,6 +5,7 @@ Version History
     Fix issues with verifying certificates based on trusted
     certs using the local CApath or CAfile
 
+        b299e0e Update Changes and Increment to version 0.20
         f58121e Merge pull request #10 from issue7
         58bc456 Allow verification of an intermediate certificate using local root store
         fdcaf73 Fixes #6 remove new_from_x509 documents
