@@ -273,11 +273,13 @@ SV * new(class, ...)
 
 
         if (items > 1) {
-            if (ST(1) != NULL)
+            if (ST(1) != NULL) {
                 // TODO: ensure_string_sv
                 CAfile = ST(1);
-                if (strlen(SvPV_nolen(CAfile)) == 0)
+                if (strlen(SvPV_nolen(CAfile)) == 0) {
                     CAfile = NULL;
+                }
+            }
 
             if (items > 2)
                 options = ensure_hv(ST(2), "options");
