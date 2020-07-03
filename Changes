@@ -1,10 +1,17 @@
 Version History
 
-0.20 02-Jul-2020
+0.21-TRIAL 03-Jul-2020
+
+    Fix cpantesters issue with indented if statement
+
+        128a7dd Fix incorrect indent issue with if statement
+
+0.20-TRIAL 02-Jul-2020
 
     Fix issues with verifying certificates based on trusted
     certs using the local CApath or CAfile
 
+        edb8cc0 Update Changes and enable tests for 5.32
         b299e0e Update Changes and Increment to version 0.20
         f58121e Merge pull request #10 from issue7
         58bc456 Allow verification of an intermediate certificate using local root store
