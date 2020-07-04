@@ -1,5 +1,9 @@
 Version History
 
+0.22 03-Jul-2020
+
+    Increment version for official release
+
 0.21-TRIAL 03-Jul-2020
 
     Fix cpantesters issue with indented if statement
