@@ -30,7 +30,7 @@ jobs:
           curl -sL https://cpanmin.us/ | perl - -nq --with-develop --installdeps .
       - name: Build Module
         run: |
-          apt-get install make gcc libssl-dev;
+          apt-get install make gcc libssl-dev openssl;
           perl Makefile.PL;
           make
       - name: Run Tests

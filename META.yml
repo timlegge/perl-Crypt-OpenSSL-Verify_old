@@ -8,6 +8,8 @@ build_requires:
   File::Slurp: '0'
   Test::Exception: '0'
   Test::More: '0.88'
+  IO::Socket::SSL: '2.068'
+  Net::SSLeay: '1.88'
 configure_requires:
   ExtUtils::MakeMaker: '0'
 dynamic_config: 0
