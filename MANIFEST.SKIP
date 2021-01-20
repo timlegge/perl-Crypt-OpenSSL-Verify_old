@@ -3,6 +3,8 @@ MANIFEST.BAK
 MANIFEST.bak
 Makefile.PL.old
 Makefile.old
+Makefile$
+MYMETA.*
 Crypt-OpenSSL-Verify*
 .github/*
 .git/*
