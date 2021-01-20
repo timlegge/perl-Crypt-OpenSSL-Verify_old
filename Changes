@@ -1,7 +1,16 @@
 Version History
 
+0.24-TRIAL 19-Jan-2021
+
+    TBD     Update Version and Changes
+    3b083e3 Fix some dist issues with extra files
+    9794729 Attempt to fix solaris issue by disabling inline optimization
+    0ab1b9f Fixes #15 - openssl-detection fails for w10/cygwin
+
 0.23 03-Dec-2020
 
+    b34cabb (tag: 0.23) Roll version 0.23
+    5e5bb90 Merge pull request #12 from fastmailops/ConfigurableLibPth
     2243383 Respect PERL_LIBPATH if set
 
 0.22 03-Jul-2020
