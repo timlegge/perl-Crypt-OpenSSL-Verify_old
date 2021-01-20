@@ -1,8 +1,14 @@
 Version History
 
+0.25-TRIAL 19-Jan-2021
+
+    Same as Version 0.24-TRIAL rename cpan file
+
+    TBD Update Version and Changes
+
 0.24-TRIAL 19-Jan-2021
 
-    TBD     Update Version and Changes
+    e60d7cf Update Version and Changes
     3b083e3 Fix some dist issues with extra files
     9794729 Attempt to fix solaris issue by disabling inline optimization
     0ab1b9f Fixes #15 - openssl-detection fails for w10/cygwin
