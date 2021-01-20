@@ -19,6 +19,7 @@ sub search_lib {
     }
     my $libbase = 'lib' . substr($lib, 2) . $Config{lib_ext};
     my $libbase_so = 'lib' . substr($lib, 2) . "." . $Config{so};
+    my $libbase_cyg = 'lib' . substr($lib, 2) . ".dll" . $Config{lib_ext};
     my @paths = split(' ', $Config{libpth});
     push @paths, $ENV{PERL_LIBPATH} if exists $ENV{PERL_LIBPATH};
     for my $path (@paths) {
@@ -29,6 +30,10 @@ sub search_lib {
         } elsif (-f $path . '/' . $libbase_so) {
             print "$path/$libbase_so\n";
             print "Found `$path/$libbase_so'.\n";
+            return $lib;
+        } elsif (-f $path . '/' . $libbase_cyg) {
+            print "$path/$libbase_cyg\n";
+            print "Found `$path/$libbase_cyg'.\n";
             return $lib;
         }
     }
