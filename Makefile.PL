@@ -63,10 +63,18 @@ if (-d "/usr/include/openssl") {
 }
 
 cc_lib_links('crypto');
-if ($Config::Config{myuname} =~ /sunos|solaris/i) {
-  cc_optimize_flags('-O2 -Wall -Werror -DOPENSSL_API_COMPAT=0x10100000L');
+
+my $ccflags = '';
+if ($Config::Config{ccname} =~ /gcc/i) {
+  $ccflags =  $ENV{AUTHOR_TESTING} ? '-Wall -Werror': '-Wall';
 } else {
-  cc_optimize_flags('-O3 -Wall -Werror -DOPENSSL_API_COMPAT=0x10100000L');
+  $ccflags =  '';
+}
+
+if (($Config::Config{myuname} =~ /sunos|solaris/i) && ($Config::Config{PATCHLEVEL} =~ /5.20/)) {
+    cc_optimize_flags("-O3 -DOPENSSL_API_COMPAT=0x10100000L");
+} else {
+    cc_optimize_flags("-O3 $ccflags -DOPENSSL_API_COMPAT=0x10100000L");
 }
 
 requires 'Crypt::OpenSSL::X509' => '1.807';
