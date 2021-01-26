@@ -1,10 +1,14 @@
 Version History
 
+0.26-TRIAL 25-Jan-2021
+
+    e43029a Disable -Werror if not author testing and gcc flags if not gcc
+
 0.25-TRIAL 19-Jan-2021
 
     Same as Version 0.24-TRIAL rename cpan file
 
-    TBD Update Version and Changes
+    0bd0ec5 Update Version and Changes
 
 0.24-TRIAL 19-Jan-2021
 
