@@ -1,7 +1,13 @@
 Version History
 
+0.27
+
+    TBD     Update Version and Changes
+    5b499ba Fix test error on OpenBSD 6.8
+
 0.26-TRIAL 25-Jan-2021
 
+    7416597 Update Changes
     e43029a Disable -Werror if not author testing and gcc flags if not gcc
 
 0.25-TRIAL 19-Jan-2021
